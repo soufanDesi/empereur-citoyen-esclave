@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empereur, Citoyen, Esclave</title>
+    <link rel="stylesheet" href="./css/output.css">
+</head>
+
+<body class="bg-background text-text-main">
+    <!-- navbar -->
+    <header class="flex gap-6 bg-surface justify-between items-center p-5">
+
+        <p class="text-primary text-xl font-bold">ECE</p>
+        <nav class="hidden md:flex items-center gap-6 ">
+            <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+                href="#accueil">Accueil</a>
+            <a class="text-primary font-medium" href="#joueurs">Joueurs</a>
+            <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+                href="#partie">Partie</a>
+            <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+                href="#historique">Historique</a>
+        </nav>
+        <p class="hidden md:block text-muted text-sm">Joueur actif : <span class="text-primary font-medium">Aucun</span>
+        </p>
+        <button id="menu-toggle" type="button" class="md:hidden text-primary text-2xl"><img class="w-5 h-5"
+                src="./assets/images/menu.png" alt=""></button>
+    </header>
+
+
+    <!-- navbar mobile -->
+    <nav id="mobile-menu" class="hidden md:hidden bg-surface p-5 flex-col gap-4">
+
+
+        <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+            href="#accueil">Accueil</a>
+        <a class="text-primary font-medium" href="#joueurs">Joueurs</a>
+        <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+            href="#partie">Partie</a>
+        <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+            href="#historique">Historique</a>
+        <p class="text-muted text-sm">Joueur actif : <span class="text-primary font-medium">Aucun</span>
+        </p>
+
+    </nav>
+
+
+    <main class="px-6 py-4">
+        <!-- cards -->
+        <section>
+
+            <div class="flex flex-col gap-4 md:flex-row justify-between md:items-center mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold">Mes joueurs</h1>
+                    <p class="text-muted text-sm">Gérez vos profils et choisissez votre joueur.</p>
+                </div>
+                <button id="add-player-btn"
+                    class="bg-primary text-background px-4 py-2 rounded-lg transition-all duration-300 hover:-translate-y-0.5 font-medium">Ajouter
+                    un joueur</button>
+            </div>
+
+            <section class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <article class="bg-surface border border-border rounded-xl p-4">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <img class="border border-border rounded-full p-0.5 w-5 h-5" src="./assets/images/dancer_945275.png" alt="">
+                            <div>
+                                <h2 class="font-semibold">Soufiane</h2>
+                                <p class="text-muted text-sm"><span>5</span> parties jouées</p>
+                            </div>
+                        </div>
+                        <p class="text-primary text-xs font-medium">Actif</p>
+                    </div>
+                    <div class="flex gap-2 mt-4 pt-4 border-t border-border">
+                        <button class="flex-1 bg-primary text-background rounded-lg py-2 font-medium "
+                            disabled>Sélectionné</button>
+                        <button
+                            class="border border-border rounded-lg px-4 py-2 hover:bg-border transition-colors">Modifier</button>
+                        <button class="border border-border rounded-lg p-2 hover:bg-red-500/20 transition-colors"><img
+                                class="w-5 h-5" src="./assets/images/image.png" alt=""></button>
+                    </div>
+                </article>
+
+            </section>
+
+            <!-- Aucun joueur heddin -->
+            <div class="hidden">
+                <img src="" alt="">
+                <h2>Aucun joueur pour le moment</h2>
+                <p>Créez votre premier profil pour commencer à jouer.</p>
+                <button>Ajouter un joueur</button>
+            </div>
+
+        </section>
+
+        <!-- Ajouter un joueur -->
+        <div id="player-modal" class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-4">
+            <div class="bg-surface rounded-xl p-6 w-full max-w-md">
+                <div class="flex justify-between items-center mb-5">
+                    <h2 class="text-xl font-semibold">Ajouter un joueur</h2>
+                    <button id="close-player-modal" type="button"
+                        class="text-muted hover:text-text-main text-xl transition-colors w-11 border border-border rounded-lg">x</button>
+                </div>
+                <form id="player-form">
+                    <label class="block text-sm font-medium mb-2" for="pseudo">Pseudo</label>
+                    <input
+                        class="w-full bg-background border border-border rounded-lg px-4 py-3 outline-none focus:border-primary"
+                        type="text" placeholder="Entrez votre pseudo" id="pseudo">
+                    <small class="block text-muted text-xs mt-2	">3 à 15 caractères, lettres et chiffres
+                        uniquement.</small>
+                    <p></p>
+                    <p class="mt-5 mb-3 text-sm font-medium">Choisissez un avatar</p>
+
+                    <div class="grid grid-cols-3 sm:grid-cols-6 gap-3">
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"><img
+                                src="./assets/images/arab-man_945277.png" alt=""></button>
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"><img
+                                src="./assets/images/athlete_945279.png" alt=""></button>
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"><img
+                                src="./assets/images/dancer_945275.png" alt=""></button>
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"><img
+                                src="./assets/images/devil_945280.png" alt=""></button>
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"><img
+                                src="./assets/images/stewardess_945227.png" alt=""></button>
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"><img
+                                src="./assets/images/woman_945276.png" alt=""></button>
+                    </div>
+                    <div class="flex justify-end gap-3 mt-6">
+                        <button id="cancel-player-btn" class="border border-border rounded-lg px-4 py-2 text-sm hover:bg-border transition-colors" type="button">Annuler</button>
+                        <button class="bg-primary text-background rounded-lg px-4 py-2 font-medium" type="submit">Créer le
+                            profil</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+    <footer class="bg-surface p-5">
+        <p class="text-muted text-sm">© 2026 Empereur, Citoyen, Esclave. Tous droits réservés.</p>
+    </footer>
+    <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>
