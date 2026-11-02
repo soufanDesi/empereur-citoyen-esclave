@@ -1,3 +1,5 @@
+import { addPlayer } from "./players.js";
+import { getPlayers, savePlayers } from "./storage.js"
 
 
 // menu mobile affich
@@ -14,6 +16,9 @@ menuT.addEventListener("click", function () {
 // ajouter un joueur
 const addPlayerButton = document.querySelector("#add-player-btn");
 const playerModal = document.querySelector("#player-modal");
+
+
+const emptyPlayers = document.querySelector("#empty-players");
 
 addPlayerButton.addEventListener("click", function () {
     playerModal.classList.remove("hidden");
@@ -40,12 +45,246 @@ const playerForm = document.querySelector("#player-form");
 const pseudoInput = document.querySelector("#pseudo");
 const avatarButtons = document.querySelectorAll(".avatar-option");
 let selectedAvatar = null;
+const pseudoHint = document.querySelector("#pseudo-hint");
 
+avatarButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+
+        avatarButtons.forEach(function (avatarButton) {
+            avatarButton.classList.remove("border-primary");
+            avatarButton.classList.add("border-border");
+        });
+
+
+        selectedAvatar = button.dataset.avatar;
+        button.classList.remove("border-border");
+        button.classList.add("border-primary");
+    })
+
+
+
+})
+
+
+// Vérifier name blur
+const regexNickname = /^[A-Za-z0-9]{3,15}$/;
+
+pseudoInput.addEventListener("blur", function () {
+    const nickname = pseudoInput.value.trim();
+
+    if (!regexNickname.test(nickname)) {
+        pseudoInput.classList.remove("border-border");
+        pseudoInput.classList.remove("border-green-500");
+        pseudoInput.classList.add("border-red-500");
+
+        pseudoHint.textContent = "Pseudo invalide : 3 à 15 lettres ou chiffres.";
+        pseudoHint.classList.remove("text-muted");
+        pseudoHint.classList.remove("text-green-500");
+        pseudoHint.classList.add("text-red-500");
+    } else {
+        pseudoInput.classList.remove("border-border");
+        pseudoInput.classList.remove("border-red-500");
+        pseudoInput.classList.add("border-green-500");
+
+        pseudoHint.textContent = "Pseudo valide";
+        pseudoHint.classList.remove("text-muted");
+        pseudoHint.classList.remove("text-red-500");
+        pseudoHint.classList.add("text-green-500");
+    }
+
+})
+
+
+
+
+
+
+
+
+
+// Vérifier all name avatar and creat player
 playerForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
     const nickname = pseudoInput.value.trim();
-    console.log(nickname);
-    console.log("MAIN JS LOADED");
+    const result = addPlayer(nickname, selectedAvatar);
+    console.log(result);
+
+    if (result.error) {
+        pseudoInput.classList.remove("border-border");
+        pseudoInput.classList.remove("border-green-500");
+        pseudoInput.classList.add("border-red-500");
+
+        pseudoHint.textContent = result.error;
+        pseudoHint.classList.remove("text-muted");
+        pseudoHint.classList.remove("text-green-500");
+        pseudoHint.classList.add("text-red-500");
+    } else {
+        pseudoInput.classList.remove("border-border");
+        pseudoInput.classList.remove("border-red-500");
+        pseudoInput.classList.add("border-green-500");
+
+        pseudoHint.textContent = "Profil créé avec succès !";
+        pseudoHint.classList.remove("text-muted");
+        pseudoHint.classList.remove("text-red-500");
+        pseudoHint.classList.add("text-green-500");
+
+        renderPlayers();
+
+        playerModal.classList.add("hidden");
+        playerModal.classList.remove("flex");
+
+        playerForm.reset();
+
+        pseudoHint.textContent = "3 à 15 caractères, lettres et chiffres uniquement.";
+        pseudoHint.classList.remove("text-green-500", "text-red-500");
+        pseudoHint.classList.add("text-muted");
+
+        pseudoInput.classList.remove("border-green-500", "border-red-500");
+        pseudoInput.classList.add("border-border");
+
+        selectedAvatar = null;
+
+        avatarButtons.forEach(function (avatarButton) {
+
+            avatarButton.classList.remove("border-primary");
+            avatarButton.classList.add("border-border");
+
+        });
+
+    }
 
 })
+
+const playerListe = document.querySelector("#players-list");
+
+
+
+function renderPlayers() {
+    const player = getPlayers();
+
+
+    if (player.length === 0) {
+        emptyPlayers.classList.remove("hidden");
+        emptyPlayers.classList.add("flex");
+    } else {
+        emptyPlayers.classList.add("hidden");
+        emptyPlayers.classList.remove("flex");
+    }
+
+
+
+    const activePlayerId = localStorage.getItem("ece_active_player");
+
+    const activePlayer = player.find(function (namePlayer) {
+        return namePlayer.id === activePlayerId;
+    });
+
+    const activePlayerNames = document.querySelectorAll(".active-player-name");
+
+    activePlayerNames.forEach(function (element) {
+        if (activePlayer) {
+            element.textContent = activePlayer.nickname;
+        } else {
+            element.textContent = "Aucun";
+        }
+
+    })
+
+    playerListe.innerHTML = "";
+
+
+    player.forEach(function (player) {
+
+        const isActive = player.id === activePlayerId;
+        let status;
+        let buttonText;
+        let buttonDisabled;
+        let buttonColor;
+        let statusColor;
+
+        if (isActive) {
+            status = "Actif";
+            buttonText = "Sélectionné";
+            buttonDisabled = "disabled";
+            buttonColor = "bg-gray-200 border border-gray-300 text-gray-600";
+            statusColor = "text-green-500";
+
+        } else {
+            status = "Inactif";
+            buttonText = "Sélectionner";
+            buttonDisabled = "";
+            buttonColor = "bg-primary text-background";
+            statusColor = "text-muted";
+        }
+
+        const card = `
+    <article class="bg-surface border border-border rounded-xl p-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img
+                    class="border border-border rounded-full p-0.5 w-10 h-10"
+                    src="./assets/images/${player.avatar}"
+                    alt="Avatar">
+
+                <div>
+                    <h2 class="font-semibold">${player.nickname}</h2>
+                    <p class="text-muted text-sm">
+                        <span>0</span> parties jouées
+                    </p>
+                </div>
+            </div>
+            <p class="${statusColor} text-xs font-medium">${status}</p>
+        </div>
+
+        <div class="flex gap-2 mt-4 pt-4 border-t border-border">
+            <button data-id="${player.id}" ${buttonDisabled} class="select-player-btn flex-1 ${buttonColor}  rounded-lg py-2 font-medium">
+                ${buttonText}
+            </button>
+
+            <button type="button" data-id="${player.id}"class="edit-player-btn border border-border rounded-lg px-4 py-2 hover:bg-border transition-colors">
+                Modifier
+            </button>
+
+            <button type="button" data-id="${player.id}" class="delete-player-btn border border-border rounded-lg p-2 hover:bg-red-500/20 transition-colors">
+                <img class="w-5 h-5" src="./assets/images/image.png" alt="Supprimer">
+            </button>
+        </div>
+    </article>
+`;
+        playerListe.innerHTML += card;
+    })
+
+    const selectButtons = document.querySelectorAll(".select-player-btn");
+    const deleteButtons = document.querySelectorAll(".delete-player-btn");
+    const editButtons = document.querySelectorAll(".edit-player-btn");
+
+    selectButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            localStorage.setItem("ece_active_player", button.dataset.id)
+            renderPlayers();
+
+        })
+
+    })
+    deleteButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            console.log(button.dataset.id);
+
+            const remainingPlayers = player.filter(function (play) {
+                return play.id !== button.dataset.id;
+            });
+            savePlayers(remainingPlayers);
+            renderPlayers();
+        });
+
+    });
+
+    editButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            console.log(button.dataset.id);
+        });
+    });
+
+}
+renderPlayers();
