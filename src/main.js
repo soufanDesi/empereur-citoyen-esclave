@@ -1,4 +1,4 @@
-import { addPlayer } from "./players.js";
+import { addPlayer, validateEditPlayer } from "./players.js";
 import { getPlayers, savePlayers } from "./storage.js"
 
 
@@ -17,6 +17,31 @@ menuT.addEventListener("click", function () {
 const addPlayerButton = document.querySelector("#add-player-btn");
 const playerModal = document.querySelector("#player-modal");
 
+// modifier
+const editPseudoInput = document.querySelector("#edit-pseudo");
+
+const editAvatarButtons = document.querySelectorAll(".edit-avatar-option");
+let selectedEditAvatar = null;
+let editingPlayerId = null;
+
+
+editAvatarButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+
+        editAvatarButtons.forEach(function (avatarButton) {
+            avatarButton.classList.remove("border-primary");
+            avatarButton.classList.add("border-border");
+        });
+
+
+        selectedEditAvatar = button.dataset.avatar;
+        button.classList.remove("border-border");
+        button.classList.add("border-primary");
+    })
+
+
+
+})
 
 const emptyPlayers = document.querySelector("#empty-players");
 
@@ -33,6 +58,17 @@ closePlayerModalButton.addEventListener("click", function () {
     playerModal.classList.remove("flex");
 });
 
+// close modefi un joueur
+
+const editPlayerModal = document.querySelector("#edit-player-modal");
+const editClosePlayerModalButton = document.querySelector("#close-edit-player-modal");
+
+editClosePlayerModalButton.addEventListener("click", function () {
+    editPlayerModal.classList.add("hidden");
+    editPlayerModal.classList.remove("flex");
+});
+
+
 // cancel :annuler
 const cancelPlayerButton = document.querySelector("#cancel-player-btn");
 
@@ -41,9 +77,19 @@ cancelPlayerButton.addEventListener("click", function () {
     playerModal.classList.remove("flex");
 });
 
+// cancel :annuler edite Player
+const editiCancelPlayerButton = document.querySelector("#cancel-edit-player-btn");
+
+editiCancelPlayerButton.addEventListener("click", function () {
+    editPlayerModal.classList.add("hidden");
+    editPlayerModal.classList.remove("flex");
+});
+
 const playerForm = document.querySelector("#player-form");
+const editePlayerForm = document.querySelector("#edit-player-form");
 const pseudoInput = document.querySelector("#pseudo");
 const avatarButtons = document.querySelectorAll(".avatar-option");
+const editpseudoHint = document.querySelector("#edit-pseudo-hint");
 let selectedAvatar = null;
 const pseudoHint = document.querySelector("#pseudo-hint");
 
@@ -155,6 +201,78 @@ playerForm.addEventListener("submit", function (event) {
     }
 
 })
+
+
+
+// Vérifier all name avatar and modifier player
+
+editePlayerForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const newNickname = editPseudoInput.value.trim();
+    console.log(newNickname)
+    console.log(selectedEditAvatar)
+    console.log(editingPlayerId)
+
+    const players = getPlayers();
+    console.log(players);
+
+    const playerToUpdate = players.find(function (playEdit) {
+        return playEdit.id === editingPlayerId;
+    })
+    console.log(playerToUpdate);
+    if (!playerToUpdate) {
+        return;
+    }
+
+    const editeResult = validateEditPlayer(newNickname, selectedEditAvatar, editingPlayerId)
+
+    if (editeResult.error) {
+        editPseudoInput.classList.remove("border-border");
+        editPseudoInput.classList.remove("border-green-500");
+        editPseudoInput.classList.add("border-red-500");
+
+        editpseudoHint.textContent = editeResult.error;
+        editpseudoHint.classList.remove("text-muted");
+        editpseudoHint.classList.remove("text-green-500");
+        editpseudoHint.classList.add("text-red-500");
+    } else {
+        editPseudoInput.classList.remove("border-border");
+        editPseudoInput.classList.remove("border-red-500");
+        editPseudoInput.classList.add("border-green-500");
+
+        editpseudoHint.textContent = "Profil modifié avec succès !";
+        editpseudoHint.classList.remove("text-muted");
+        editpseudoHint.classList.remove("text-red-500");
+        editpseudoHint.classList.add("text-green-500");
+
+        playerToUpdate.nickname = newNickname;
+        playerToUpdate.avatar = selectedEditAvatar;
+
+        savePlayers(players)
+        renderPlayers();
+
+        editPlayerModal.classList.add("hidden");
+        editPlayerModal.classList.remove("flex");
+
+        editpseudoHint.textContent = "3 à 15 caractères, lettres et chiffres uniquement.";
+        editpseudoHint.classList.remove("text-green-500", "text-red-500");
+        editpseudoHint.classList.add("text-muted");
+
+        editPseudoInput.classList.remove("border-green-500", "border-red-500");
+        editPseudoInput.classList.add("border-border");
+
+    }
+})
+
+
+
+
+
+
+
+
+
 
 const playerListe = document.querySelector("#players-list");
 
@@ -283,6 +401,35 @@ function renderPlayers() {
     editButtons.forEach(function (button) {
         button.addEventListener("click", function () {
             console.log(button.dataset.id);
+
+            editPlayerModal.classList.remove("hidden");
+            editPlayerModal.classList.add("flex");
+
+            const playerToEdit = player.find(function (playr) {
+                return playr.id === button.dataset.id;
+            })
+            editPseudoInput.value = playerToEdit.nickname;
+            selectedEditAvatar = playerToEdit.avatar;
+            editingPlayerId = button.dataset.id;
+            console.log(playerToEdit.nickname);
+
+            editAvatarButtons.forEach(function (avatarButton) {
+                if (playerToEdit.avatar === avatarButton.dataset.avatar) {
+
+                    avatarButton.classList.remove("border-border");
+                    avatarButton.classList.add("border-primary");
+
+                } else {
+
+                    avatarButton.classList.remove("border-primary");
+                    avatarButton.classList.add("border-border");
+
+                }
+
+            })
+
+
+
         });
     });
 
