@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partie | Empereur, Citoyen, Esclave</title>
+    <link rel="stylesheet" href="./css/output.css">
+</head>
+
+<body class="bg-background text-text-main">
+
+    <!-- navbar -->
+    <header class="flex gap-6 bg-surface justify-between items-center p-5">
+
+        <p class="text-primary text-xl font-bold">ECE</p>
+
+        <nav class="hidden md:flex items-center gap-6">
+            <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+                href="./index.html">Accueil</a>
+
+            <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+                href="./index.html#joueurs">Joueurs</a>
+
+            <a class="text-primary font-medium" href="./partie.html">Partie</a>
+
+            <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+                href="./index.html#historique">Historique</a>
+        </nav>
+
+        <p class="hidden md:block text-muted text-sm">
+            Joueur actif :
+            <span class="text-primary font-medium active-player-name">Aucun</span>
+        </p>
+
+        <button id="menu-toggle" type="button" class="md:hidden text-primary text-2xl">
+            <img class="w-5 h-5" src="./assets/images/menu.png" alt="Menu">
+        </button>
+    </header>
+
+    <!-- navbar mobile -->
+    <nav id="mobile-menu" class="hidden md:hidden bg-surface p-5 flex-col gap-4">
+
+        <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+            href="./index.html">Accueil</a>
+
+        <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+            href="./index.html#joueurs">Joueurs</a>
+
+        <a class="text-primary font-medium" href="./partie.html">Partie</a>
+
+        <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+            href="./index.html#historique">Historique</a>
+
+        <p class="text-muted text-sm">
+            Joueur actif :
+            <span class="text-primary font-medium active-player-name">Aucun</span>
+        </p>
+    </nav>
+
+
+    <main class="flex-1 px-6 py-4">
+
+        <section>
+            <div class="flex flex-col gap-4 md:flex-row justify-between md:items-center mb-6">
+
+                <div>
+                    <h1 class="text-3xl font-bold">Partie</h1>
+                    <p class="text-muted text-sm">Affrontez l'ordinateur</p>
+                </div>
+
+                <p class="bg-primary/10 text-primary border border-primary/30 rounded-lg px-4 py-2 font-medium w-fit">Manche <span>1</span>/ 12</p>
+
+
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="bg-surface border border-border rounded-xl p-4 text-center">
+                    <p class="text-muted text-sm mb-1">Premier</p>
+                    <p class="text-xl font-semibold">Empereur</p>
+                </div>
+
+                <div class="bg-surface border border-border rounded-xl p-4 text-center">
+                    <p class="text-muted text-sm mb-1">Votre camp</p>
+                    <p class="text-xl font-semibold">Empereur</p>
+                </div>
+
+                <div class="bg-surface border border-border rounded-xl p-4 text-center">
+                    <p class="text-muted text-sm mb-1">Groupe</p>
+                    <p class="text-xl font-semibold"> <span>1</span> / 4</p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="bg-surface border border-border rounded-xl p-5 mt-5">
+            <div>
+                <div class="flex justify-between items-center mb-5">
+                    <h2 class="text-xl font-semibold">Ordinateur</h2>
+                    <p class="text-primary font-medium">Score : <span>0</span> pts</p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-3">
+                    <div class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
+                        <p class="text-2xl text-muted font-bold">?</p>
+                    </div>
+
+                    <div class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
+                        <p class="text-2xl text-muted font-bold">?</p>
+                    </div>
+
+                    <div class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
+                        <p class="text-2xl text-muted font-bold">?</p>
+                    </div>
+
+                    <div class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
+                        <p class="text-2xl text-muted font-bold">?</p>
+                    </div>
+
+                    <div class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
+                        <p class="text-2xl text-muted font-bold">?</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="bg-surface border border-border rounded-xl p-5 mt-5">
+            <h2 class="text-xl font-semibold text-center mb-5">Zone de duel</h2>
+            <div class="flex items-center justify-center gap-4">
+                <div class="w-24 h-32 bg-background border-2 border-dashed border-border rounded-lg flex items-center justify-center">?</div>
+                <p class="text-primary text-xl font-bold">VS</p>
+                <div class="w-24 h-32 bg-background border-2 border-dashed border-border rounded-lg flex items-center justify-center">?</div>
+            </div>
+            <p class="text-muted text-sm text-center mt-5">Choisissez une carte pour commencer.</p>
+        </section>
+
+        <section class="bg-surface border border-border rounded-xl p-5 mt-5">
+            <div>
+                <div class=" flex justify-between items-center mb-5">
+                    <h2 class="text-xl font-semibold">Vos cartes</h2>
+                    <p class="text-primary font-medium">Score : <span>0</span> pts</p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-3">
+                    <div class="w-14 h-20 sm:w-20 sm:h-28">
+                        <button class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
+                    </div>
+
+                    <div class="w-14 h-20 sm:w-20 sm:h-28">
+                        <button class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
+                    </div>
+
+                    <div class="w-14 h-20 sm:w-20 sm:h-28">
+                        <button class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
+                    </div>
+
+                    <div class="w-14 h-20 sm:w-20 sm:h-28">
+                        <button class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
+                    </div>
+
+                    <div class="w-14 h-20 sm:w-20 sm:h-28">
+                        <button class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Empereur</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="hidden bg-surface border border-border rounded-xl p-8 mt-5 text-center">
+            <h2 class="text-2xl font-bold mb-4">Fin de partie</h2>
+            <p class="text-primary text-xl font-semibold mb-3">Victoire !</p>
+            <p class="text-muted text-lg mb-6">Score final : <span class="text-text-main font-bold text-2xl">0</span> - <span class="text-text-main font-bold text-2xl">0</span> </p>
+            <button class="bg-primary text-background px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-all cursor-pointer">Rejouer</button>
+        </section>
+
+
+
+    </main>
+
+
+    <footer class="bg-surface p-5">
+        <p class="text-muted text-sm">
+            © 2026 Empereur, Citoyen, Esclave. Tous droits réservés.
+        </p>
+    </footer>
+
+    <script type="module" src="./src/partie.js"></script>
+</body>
+
+</html>
