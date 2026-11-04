@@ -59,126 +59,165 @@
     </nav>
 
 
+
     <main class="flex-1 px-6 py-4">
 
-        <section>
-            <div class="flex flex-col gap-4 md:flex-row justify-between md:items-center mb-6">
 
+        <section id="start-screen" class="bg-surface border border-border rounded-xl p-8 text-center mt-5">
+            <h1 class="text-3xl font-bold mb-3">Prêt à jouer ?</h1>
+
+            <p class="text-muted mb-6">
+                Affrontez l'ordinateur dans une partie de 12 manches.
+            </p>
+
+            <button id="start-game-btn" type="button"
+                class="bg-primary text-background px-6 py-3 rounded-lg font-medium cursor-pointer">
+                Commencer la partie
+            </button>
+
+            <p id="start-error" class="hidden text-red-500 text-sm mt-4">
+                Veuillez sélectionner un joueur avant de commencer.
+            </p>
+        </section>
+
+        <div id="game-screen" class="hidden">
+            <section>
+                <div class="flex flex-col gap-4 md:flex-row justify-between md:items-center mb-6">
+
+                    <div>
+                        <h1 class="text-3xl font-bold">Partie</h1>
+                        <p class="text-muted text-sm">Affrontez l'ordinateur</p>
+                    </div>
+
+                    <p
+                        class="bg-primary/10 text-primary border border-primary/30 rounded-lg px-4 py-2 font-medium w-fit">
+                        Manche <span>1</span>/ 12</p>
+
+
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="bg-surface border border-border rounded-xl p-4 text-center">
+                        <p class="text-muted text-sm mb-1">Premier</p>
+                        <p class="text-xl font-semibold">Empereur</p>
+                    </div>
+
+                    <div class="bg-surface border border-border rounded-xl p-4 text-center">
+                        <p class="text-muted text-sm mb-1">Votre camp</p>
+                        <p class="text-xl font-semibold">Empereur</p>
+                    </div>
+
+                    <div class="bg-surface border border-border rounded-xl p-4 text-center">
+                        <p class="text-muted text-sm mb-1">Groupe</p>
+                        <p class="text-xl font-semibold"> <span>1</span> / 4</p>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <section class="bg-surface border border-border rounded-xl p-5 mt-5">
                 <div>
-                    <h1 class="text-3xl font-bold">Partie</h1>
-                    <p class="text-muted text-sm">Affrontez l'ordinateur</p>
-                </div>
-
-                <p class="bg-primary/10 text-primary border border-primary/30 rounded-lg px-4 py-2 font-medium w-fit">Manche <span>1</span>/ 12</p>
-
-
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div class="bg-surface border border-border rounded-xl p-4 text-center">
-                    <p class="text-muted text-sm mb-1">Premier</p>
-                    <p class="text-xl font-semibold">Empereur</p>
-                </div>
-
-                <div class="bg-surface border border-border rounded-xl p-4 text-center">
-                    <p class="text-muted text-sm mb-1">Votre camp</p>
-                    <p class="text-xl font-semibold">Empereur</p>
-                </div>
-
-                <div class="bg-surface border border-border rounded-xl p-4 text-center">
-                    <p class="text-muted text-sm mb-1">Groupe</p>
-                    <p class="text-xl font-semibold"> <span>1</span> / 4</p>
-                </div>
-            </div>
-
-        </section>
-
-
-        <section class="bg-surface border border-border rounded-xl p-5 mt-5">
-            <div>
-                <div class="flex justify-between items-center mb-5">
-                    <h2 class="text-xl font-semibold">Ordinateur</h2>
-                    <p class="text-primary font-medium">Score : <span>0</span> pts</p>
-                </div>
-
-                <div class="flex flex-wrap justify-center gap-3">
-                    <div class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
-                        <p class="text-2xl text-muted font-bold">?</p>
+                    <div class="flex justify-between items-center mb-5">
+                        <h2 class="text-xl font-semibold">Ordinateur</h2>
+                        <p class="text-primary font-medium">Score : <span>0</span> pts</p>
                     </div>
 
-                    <div class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
-                        <p class="text-2xl text-muted font-bold">?</p>
-                    </div>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <div
+                            class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
+                            <p class="text-2xl text-muted font-bold">?</p>
+                        </div>
 
-                    <div class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
-                        <p class="text-2xl text-muted font-bold">?</p>
-                    </div>
+                        <div
+                            class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
+                            <p class="text-2xl text-muted font-bold">?</p>
+                        </div>
 
-                    <div class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
-                        <p class="text-2xl text-muted font-bold">?</p>
-                    </div>
+                        <div
+                            class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
+                            <p class="text-2xl text-muted font-bold">?</p>
+                        </div>
 
-                    <div class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
-                        <p class="text-2xl text-muted font-bold">?</p>
+                        <div
+                            class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
+                            <p class="text-2xl text-muted font-bold">?</p>
+                        </div>
+
+                        <div
+                            class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
+                            <p class="text-2xl text-muted font-bold">?</p>
+                        </div>
+
                     </div>
 
                 </div>
 
-            </div>
-
-        </section>
+            </section>
 
 
-        <section class="bg-surface border border-border rounded-xl p-5 mt-5">
-            <h2 class="text-xl font-semibold text-center mb-5">Zone de duel</h2>
-            <div class="flex items-center justify-center gap-4">
-                <div class="w-24 h-32 bg-background border-2 border-dashed border-border rounded-lg flex items-center justify-center">?</div>
-                <p class="text-primary text-xl font-bold">VS</p>
-                <div class="w-24 h-32 bg-background border-2 border-dashed border-border rounded-lg flex items-center justify-center">?</div>
-            </div>
-            <p class="text-muted text-sm text-center mt-5">Choisissez une carte pour commencer.</p>
-        </section>
+            <section class="bg-surface border border-border rounded-xl p-5 mt-5">
+                <h2 class="text-xl font-semibold text-center mb-5">Zone de duel</h2>
+                <div class="flex items-center justify-center gap-4">
+                    <div
+                        class="w-24 h-32 bg-background border-2 border-dashed border-border rounded-lg flex items-center justify-center">
+                        ?</div>
+                    <p class="text-primary text-xl font-bold">VS</p>
+                    <div
+                        class="w-24 h-32 bg-background border-2 border-dashed border-border rounded-lg flex items-center justify-center">
+                        ?</div>
+                </div>
+                <p class="text-muted text-sm text-center mt-5">Choisissez une carte pour commencer.</p>
+            </section>
 
-        <section class="bg-surface border border-border rounded-xl p-5 mt-5">
-            <div>
-                <div class=" flex justify-between items-center mb-5">
-                    <h2 class="text-xl font-semibold">Vos cartes</h2>
-                    <p class="text-primary font-medium">Score : <span>0</span> pts</p>
+            <section class="bg-surface border border-border rounded-xl p-5 mt-5">
+                <div>
+                    <div class=" flex justify-between items-center mb-5">
+                        <h2 class="text-xl font-semibold">Vos cartes</h2>
+                        <p class="text-primary font-medium">Score : <span>0</span> pts</p>
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <div class="w-14 h-20 sm:w-20 sm:h-28">
+                            <button
+                                class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
+                        </div>
+
+                        <div class="w-14 h-20 sm:w-20 sm:h-28">
+                            <button
+                                class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
+                        </div>
+
+                        <div class="w-14 h-20 sm:w-20 sm:h-28">
+                            <button
+                                class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
+                        </div>
+
+                        <div class="w-14 h-20 sm:w-20 sm:h-28">
+                            <button
+                                class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
+                        </div>
+
+                        <div class="w-14 h-20 sm:w-20 sm:h-28">
+                            <button
+                                class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Empereur</button>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="flex flex-wrap justify-center gap-3">
-                    <div class="w-14 h-20 sm:w-20 sm:h-28">
-                        <button class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
-                    </div>
+            </section>
 
-                    <div class="w-14 h-20 sm:w-20 sm:h-28">
-                        <button class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
-                    </div>
-
-                    <div class="w-14 h-20 sm:w-20 sm:h-28">
-                        <button class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
-                    </div>
-
-                    <div class="w-14 h-20 sm:w-20 sm:h-28">
-                        <button class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
-                    </div>
-
-                    <div class="w-14 h-20 sm:w-20 sm:h-28">
-                        <button class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Empereur</button>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <section class="hidden bg-surface border border-border rounded-xl p-8 mt-5 text-center">
+        </div>
+        <section id="end-screen" class="hidden bg-surface border border-border rounded-xl p-8 mt-5 text-center">
             <h2 class="text-2xl font-bold mb-4">Fin de partie</h2>
             <p class="text-primary text-xl font-semibold mb-3">Victoire !</p>
-            <p class="text-muted text-lg mb-6">Score final : <span class="text-text-main font-bold text-2xl">0</span> - <span class="text-text-main font-bold text-2xl">0</span> </p>
-            <button class="bg-primary text-background px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-all cursor-pointer">Rejouer</button>
+            <p class="text-muted text-lg mb-6">Score final : <span class="text-text-main font-bold text-2xl">0</span> -
+                <span class="text-text-main font-bold text-2xl">0</span>
+            </p>
+            <button
+                class="bg-primary text-background px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-all cursor-pointer">Rejouer</button>
         </section>
 
 
