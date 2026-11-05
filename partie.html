@@ -91,7 +91,7 @@
 
                     <p
                         class="bg-primary/10 text-primary border border-primary/30 rounded-lg px-4 py-2 font-medium w-fit">
-                        Manche <span>1</span>/ 12</p>
+                        Manche <span id="manche-number">1</span>/ 12</p>
 
 
                 </div>
@@ -104,12 +104,12 @@
 
                     <div class="bg-surface border border-border rounded-xl p-4 text-center">
                         <p class="text-muted text-sm mb-1">Votre camp</p>
-                        <p class="text-xl font-semibold">Empereur</p>
+                        <p id="player-camp" class="text-xl font-semibold">Empereur</p>
                     </div>
 
                     <div class="bg-surface border border-border rounded-xl p-4 text-center">
                         <p class="text-muted text-sm mb-1">Groupe</p>
-                        <p class="text-xl font-semibold"> <span>1</span> / 4</p>
+                        <p class="text-xl font-semibold"> <span id="group-number">1</span> / 4</p>
                     </div>
                 </div>
 
@@ -120,10 +120,10 @@
                 <div>
                     <div class="flex justify-between items-center mb-5">
                         <h2 class="text-xl font-semibold">Ordinateur</h2>
-                        <p class="text-primary font-medium">Score : <span>0</span> pts</p>
+                        <p class="text-primary font-medium">Score : <span id="computer-score">0</span> pts</p>
                     </div>
 
-                    <div class="flex flex-wrap justify-center gap-3">
+                    <div id="computer-cards" class="flex flex-wrap justify-center gap-3">
                         <div
                             class="w-14 h-20 sm:w-20 sm:h-28 bg-background border border-border rounded-lg flex items-center justify-center">
                             <p class="text-2xl text-muted font-bold">?</p>
@@ -159,25 +159,33 @@
             <section class="bg-surface border border-border rounded-xl p-5 mt-5">
                 <h2 class="text-xl font-semibold text-center mb-5">Zone de duel</h2>
                 <div class="flex items-center justify-center gap-4">
-                    <div
+                    <div id="duel-player"
                         class="w-24 h-32 bg-background border-2 border-dashed border-border rounded-lg flex items-center justify-center">
                         ?</div>
                     <p class="text-primary text-xl font-bold">VS</p>
-                    <div
+                    <div id="duel-computer"
                         class="w-24 h-32 bg-background border-2 border-dashed border-border rounded-lg flex items-center justify-center">
                         ?</div>
                 </div>
                 <p class="text-muted text-sm text-center mt-5">Choisissez une carte pour commencer.</p>
+
+                <div class="text-center mt-5">
+                    <button id="next-round-btn" type="button"
+                        class="hidden bg-primary text-background px-6 py-3 rounded-lg font-medium cursor-pointer">
+                        Manche suivante
+                    </button>
+                </div>
+
             </section>
 
             <section class="bg-surface border border-border rounded-xl p-5 mt-5">
                 <div>
                     <div class=" flex justify-between items-center mb-5">
                         <h2 class="text-xl font-semibold">Vos cartes</h2>
-                        <p class="text-primary font-medium">Score : <span>0</span> pts</p>
+                        <p class="text-primary font-medium">Score : <span id="player-score">0</span> pts</p>
                     </div>
 
-                    <div class="flex flex-wrap justify-center gap-3">
+                    <div id="player-cards" class="flex flex-wrap justify-center gap-3">
                         <div class="w-14 h-20 sm:w-20 sm:h-28">
                             <button
                                 class="w-full h-full bg-background border border-border rounded-lg text-xs sm:text-sm font-medium hover:border-primary hover:-translate-y-1 transition-all duration-200 cursor-pointer">Citoyen</button>
@@ -212,9 +220,10 @@
         </div>
         <section id="end-screen" class="hidden bg-surface border border-border rounded-xl p-8 mt-5 text-center">
             <h2 class="text-2xl font-bold mb-4">Fin de partie</h2>
-            <p class="text-primary text-xl font-semibold mb-3">Victoire !</p>
-            <p class="text-muted text-lg mb-6">Score final : <span class="text-text-main font-bold text-2xl">0</span> -
-                <span class="text-text-main font-bold text-2xl">0</span>
+            <p id="final-result" class="text-primary text-xl font-semibold mb-3">Victoire !</p>
+            <p class="text-muted text-lg mb-6">Score final : <span class="text-text-main font-bold text-2xl"
+                    id="final-player-score">0</span> -
+                <span class="text-text-main font-bold text-2xl" id="final-computer-score">0</span>
             </p>
             <button
                 class="bg-primary text-background px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-all cursor-pointer">Rejouer</button>

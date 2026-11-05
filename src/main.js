@@ -1,6 +1,6 @@
 import { addPlayer, validateEditPlayer } from "./players.js";
 import { getPlayers, savePlayers } from "./storage.js"
-
+import { updateActivePlayerName } from "./ui.js";
 
 // menu mobile affich
 const menuT = document.querySelector("#menu-toggle");
@@ -290,24 +290,8 @@ function renderPlayers() {
         emptyPlayers.classList.remove("flex");
     }
 
-
-
     const activePlayerId = localStorage.getItem("ece_active_player");
-
-    const activePlayer = player.find(function (namePlayer) {
-        return namePlayer.id === activePlayerId;
-    });
-
-    const activePlayerNames = document.querySelectorAll(".active-player-name");
-
-    activePlayerNames.forEach(function (element) {
-        if (activePlayer) {
-            element.textContent = activePlayer.nickname;
-        } else {
-            element.textContent = "Aucun";
-        }
-
-    })
+    updateActivePlayerName(player);
 
     playerListe.innerHTML = "";
 
@@ -435,3 +419,5 @@ function renderPlayers() {
 
 }
 renderPlayers();
+
+
