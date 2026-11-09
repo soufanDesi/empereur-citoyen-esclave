@@ -1,0 +1,26 @@
+{
+  "name": "empereur-citoyen-esclave",
+  "version": "1.0.0",
+  "description": "Application web de jeu de cartes développée dans le cadre du Sprint 2 de la formation Développeur Web et Web Mobile.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tailwindcss -i ./css/input.css -o ./css/output.css --watch",
+    "build": "tailwindcss -i ./css/input.css -o ./css/output.css --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soufanDesi/empereur-citoyen-esclave.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/soufanDesi/empereur-citoyen-esclave/issues"
+  },
+  "homepage": "https://github.com/soufanDesi/empereur-citoyen-esclave#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}
