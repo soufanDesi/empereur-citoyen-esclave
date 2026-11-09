@@ -106,9 +106,7 @@
                         class="w-full bg-background border border-border rounded-lg px-4 py-3 outline-none focus:border-primary">
                         <option value="all">Toutes les périodes</option>
                         <option value="today">Aujourd'hui</option>
-                        <option value="yesterday">Hier</option>
-                        <option value="week">Cette semaine</option>
-                        <option value="last-month">Mois dernier</option>
+                        <option value="week">7 derniers jours</option>
                     </select>
                 </div>
 
@@ -134,6 +132,17 @@
 
 
         </section>
+
+        <!-- message -->
+        <div id="history-empty" class="hidden text-center py-10">
+            <h2 class="text-lg font-semibold text-text-main">
+                Aucune partie trouvée
+            </h2>
+
+            <p class="text-muted text-sm mt-2">
+                Aucune partie ne correspond à votre recherche ou à vos filtres.
+            </p>
+        </div>
 
     </main>
 

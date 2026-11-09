@@ -7,13 +7,68 @@ updateActivePlayerName(players);
 let history = getHistory();
 const historyList = document.querySelector("#history-list");
 console.log("Historique :", history);
+const historySearch = document.querySelector("#history-search");
+const historyResult = document.querySelector("#history-result");
+const historyPeriod = document.querySelector("#history-period");
+const historySort = document.querySelector("#history-sort");
+const historyEmpty = document.querySelector("#history-empty");
+
 const deleteModal = document.querySelector("#delete-history-modal");
 let partieToDelete = null;
 
 function renderHistory() {
     historyList.innerHTML = "";
 
-    history.forEach(function (partie) {
+    const searchValue = historySearch.value.trim().toLowerCase();
+    const resultValue = historyResult.value;
+    const periodValue = historyPeriod.value;
+    const today = new Date();
+    const sortValue = historySort.value;
+
+    const filteredHistory = history.filter(function (partie) {
+        const playerName = partie.playerName || "Joueur inconnu";
+        const matchName = playerName.toLowerCase().includes(searchValue);
+        const matchRresult = resultValue === "all" || partie.resultat === resultValue;
+
+        let gameDate = null;
+
+        if (partie.date) {
+            gameDate = new Date(partie.date);
+        } else {
+            gameDate = null;
+        }
+
+        let matchPeriod = true;
+
+        if (periodValue === "today") {
+            if (gameDate === null) {
+                matchPeriod = false;
+            } else {
+                matchPeriod = gameDate.getFullYear() === today.getFullYear() && gameDate.getMonth() === today.getMonth() && gameDate.getDate() === today.getDate();
+            }
+        }
+
+        return matchName && matchRresult && matchPeriod;
+    });
+
+    filteredHistory.sort(function (a, b) {
+        const dateA = new Date(a.date).getTime();
+        const dateB = new Date(b.date).getTime();
+
+        if (sortValue === "recent") {
+            return dateB - dateA;
+        } else {
+            return dateA - dateB;
+        }
+    });
+
+    if (filteredHistory.length === 0) {
+        historyEmpty.classList.remove("hidden");
+    } else {
+        historyEmpty.classList.add("hidden");
+    }
+
+    filteredHistory.forEach(function (partie) {
         const date = partie.date ? new Date(partie.date).toLocaleDateString("fr-FR") : "Date inconnue";
         const card = document.createElement("div");
 
@@ -74,7 +129,7 @@ cancelDeleteButton.addEventListener("click", function () {
 const confirmDeleteButton = document.querySelector("#confirm-delete-history");
 
 confirmDeleteButton.addEventListener("click", function () {
-    if (partieToDelete === null){
+    if (partieToDelete === null) {
         return
     }
 
@@ -92,6 +147,21 @@ confirmDeleteButton.addEventListener("click", function () {
     renderHistory();
 });
 
+historySearch.addEventListener("input", function () {
+    renderHistory();
+});
+
+historyResult.addEventListener("change", function () {
+    renderHistory();
+});
+
+historyPeriod.addEventListener("change", function () {
+    renderHistory();
+});
+
+historySort.addEventListener("change", function () {
+    renderHistory();
+});
 
 renderHistory();
 

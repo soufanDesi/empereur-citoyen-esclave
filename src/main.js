@@ -246,6 +246,18 @@ editePlayerForm.addEventListener("submit", function (event) {
         editpseudoHint.classList.remove("text-red-500");
         editpseudoHint.classList.add("text-green-500");
 
+
+
+        const history = getHistory();
+
+        history.forEach(function (partie) {
+            if (partie.playerId === editingPlayerId || (!partie.playerId && partie.playerName === playerToUpdate.nickname)) {
+                partie.playerName = newNickname;
+            }
+        });
+
+        saveHistory(history);
+
         playerToUpdate.nickname = newNickname;
         playerToUpdate.avatar = selectedEditAvatar;
 
@@ -275,7 +287,8 @@ editePlayerForm.addEventListener("submit", function (event) {
 
 
 const playerListe = document.querySelector("#players-list");
-
+const deletePlayerModal = document.querySelector("#delete-player-modal");
+let playerToDeleteId = null;
 
 
 function renderPlayers() {
@@ -371,30 +384,37 @@ function renderPlayers() {
     })
     deleteButtons.forEach(function (button) {
         button.addEventListener("click", function () {
-            const playerToDelete = player.find(function (play) {
-                return play.id === button.dataset.id;
-            });
+            playerToDeleteId = button.dataset.id;
 
-            if (!playerToDelete) return;
+            deletePlayerModal.classList.remove("hidden");
+            deletePlayerModal.classList.add("flex");
 
-            const history = getHistory();
 
-            history.forEach(function (partie) {
-                if (partie.playerName === playerToDelete.nickname) {
-                    partie.playerName = "Joueur supprimé";
-                    console.log("Joueur supprimé :", playerToDelete);
-                    console.log("Historique avant suppression :", history);
-                }
-            });
 
-            saveHistory(history);
+            //     const playerToDelete = player.find(function (play) {
+            //         return play.id === button.dataset.id;
+            //     });
 
-            const remainingPlayers = player.filter(function (play) {
-                return play.id !== button.dataset.id;
-            });
+            //     if (!playerToDelete) return;
 
-            savePlayers(remainingPlayers);
-            renderPlayers();
+            //     const history = getHistory();
+
+            //     history.forEach(function (partie) {
+            //         if (partie.playerName === playerToDelete.nickname) {
+            //             partie.playerName = "Joueur supprimé";
+            //             console.log("Joueur supprimé :", playerToDelete);
+            //             console.log("Historique avant suppression :", history);
+            //         }
+            //     });
+
+            //     saveHistory(history);
+
+            //     const remainingPlayers = player.filter(function (play) {
+            //         return play.id !== button.dataset.id;
+            //     });
+
+            //     savePlayers(remainingPlayers);
+            //     renderPlayers();
         });
     });
 
@@ -436,4 +456,54 @@ function renderPlayers() {
 }
 renderPlayers();
 
+const cancelDeletePlayerButton = document.querySelector("#cancel-delete-player");
 
+cancelDeletePlayerButton.addEventListener("click", function () {
+    playerToDeleteId = null;
+
+    deletePlayerModal.classList.add("hidden");
+    deletePlayerModal.classList.remove("flex");
+});
+
+
+
+const confirmDeletePlayerButton = document.querySelector("#confirm-delete-player");
+
+confirmDeletePlayerButton.addEventListener("click", function () {
+    if (playerToDeleteId === null) return;
+
+    const players = getPlayers();
+
+    const playerToDelete = players.find(function (player) {
+        return player.id === playerToDeleteId;
+    });
+
+    if (!playerToDelete) return;
+
+    const history = getHistory();
+
+    history.forEach(function (partie) {
+        if (partie.playerId === playerToDeleteId || (!partie.playerId && partie.playerName === playerToDelete.nickname)) {
+            partie.playerName = "Joueur supprimé";
+        }
+    });
+
+    saveHistory(history);
+
+    const remainingPlayers = players.filter(function (player) {
+        return player.id !== playerToDeleteId;
+    });
+
+    savePlayers(remainingPlayers);
+
+    if (localStorage.getItem("ece_active_player") === playerToDeleteId) {
+        localStorage.removeItem("ece_active_player");
+    }
+
+    playerToDeleteId = null;
+
+    deletePlayerModal.classList.add("hidden");
+    deletePlayerModal.classList.remove("flex");
+
+    renderPlayers();
+});

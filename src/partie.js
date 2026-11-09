@@ -327,6 +327,8 @@ function endGame() {
     })
 
     const partie = {
+        id: "g_" + Date.now(),
+        playerId: activePlayer.id,
         playerName: activePlayer.nickname,
         scoreJoueur: scoreJoueur,
         scorePC: scorePC,
