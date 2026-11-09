@@ -98,4 +98,9 @@ export function nextRound(manche) {
     return manche + 1;
 }
 
-
+export function switchFirstCamp(premierCamp) {
+    if (premierCamp === "Empereur") {
+        return "Esclave";
+    }
+    return "Empereur";
+}

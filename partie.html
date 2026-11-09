@@ -20,12 +20,12 @@
                 href="./index.html">Accueil</a>
 
             <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
-                href="./index.html#joueurs">Joueurs</a>
+                href="./joueurs.html">Joueurs</a>
 
             <a class="text-primary font-medium" href="./partie.html">Partie</a>
 
             <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
-                href="./index.html#historique">Historique</a>
+                href="./historique.html">Historique</a>
         </nav>
 
         <p class="hidden md:block text-muted text-sm">
@@ -45,12 +45,12 @@
             href="./index.html">Accueil</a>
 
         <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
-            href="./index.html#joueurs">Joueurs</a>
+            href="./joueurs.html">Joueurs</a>
 
         <a class="text-primary font-medium" href="./partie.html">Partie</a>
 
         <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
-            href="./index.html#historique">Historique</a>
+            href="./historique.html">Historique</a>
 
         <p class="text-muted text-sm">
             Joueur actif :
@@ -99,7 +99,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div class="bg-surface border border-border rounded-xl p-4 text-center">
                         <p class="text-muted text-sm mb-1">Premier</p>
-                        <p class="text-xl font-semibold">Empereur</p>
+                        <p id="first-camp" class="text-xl font-semibold">Empereur</p>
                     </div>
 
                     <div class="bg-surface border border-border rounded-xl p-4 text-center">
@@ -225,7 +225,7 @@
                     id="final-player-score">0</span> -
                 <span class="text-text-main font-bold text-2xl" id="final-computer-score">0</span>
             </p>
-            <button
+            <button id="replay-btn" type="button"
                 class="bg-primary text-background px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-all cursor-pointer">Rejouer</button>
         </section>
 

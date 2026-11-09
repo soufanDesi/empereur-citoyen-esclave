@@ -1,5 +1,5 @@
 import { addPlayer, validateEditPlayer } from "./players.js";
-import { getPlayers, savePlayers } from "./storage.js"
+import { getPlayers, savePlayers, getHistory, saveHistory } from "./storage.js"
 import { updateActivePlayerName } from "./ui.js";
 
 // menu mobile affich
@@ -371,15 +371,31 @@ function renderPlayers() {
     })
     deleteButtons.forEach(function (button) {
         button.addEventListener("click", function () {
-            console.log(button.dataset.id);
+            const playerToDelete = player.find(function (play) {
+                return play.id === button.dataset.id;
+            });
+
+            if (!playerToDelete) return;
+
+            const history = getHistory();
+
+            history.forEach(function (partie) {
+                if (partie.playerName === playerToDelete.nickname) {
+                    partie.playerName = "Joueur supprimé";
+                    console.log("Joueur supprimé :", playerToDelete);
+                    console.log("Historique avant suppression :", history);
+                }
+            });
+
+            saveHistory(history);
 
             const remainingPlayers = player.filter(function (play) {
                 return play.id !== button.dataset.id;
             });
+
             savePlayers(remainingPlayers);
             renderPlayers();
         });
-
     });
 
     editButtons.forEach(function (button) {

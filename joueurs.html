@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empereur, Citoyen, Esclave</title>
+    <link rel="stylesheet" href="./css/output.css">
+</head>
+
+<body class="bg-background text-text-main">
+    <!-- navbar -->
+    <header class="flex gap-6 bg-surface justify-between items-center p-5">
+
+        <p class="text-primary text-xl font-bold">ECE</p>
+        <nav class="hidden md:flex items-center gap-6 ">
+            <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+                href="./index.html">Accueil</a>
+            <a class="text-primary font-medium" href="./joueurs.html">Joueurs</a>
+            <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+                href="./partie.html">Partie</a>
+            <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+                href="./historique.html">Historique</a>
+        </nav>
+        <p class="hidden md:block text-muted text-sm">Joueur actif : <span
+                class="text-primary font-medium active-player-name">Aucun</span>
+        </p>
+        <button id="menu-toggle" type="button" class="md:hidden text-primary text-2xl"><img class="w-5 h-5"
+                src="./assets/images/menu.png" alt=""></button>
+    </header>
+
+
+    <!-- navbar mobile -->
+    <nav id="mobile-menu" class="hidden md:hidden bg-surface p-5 flex-col gap-4">
+
+
+        <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+            href="./index.html">Accueil</a>
+        <a class="text-primary font-medium" href="./joueurs.html">Joueurs</a>
+        <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+            href="./partie.html">Partie</a>
+        <a class="text-muted hover:text-primary transition-all duration-300 hover:-translate-y-0.5"
+            href="./historique.html">Historique</a>
+        <p class="text-muted text-sm">Joueur actif : <span
+                class="text-primary font-medium active-player-name">Aucun</span>
+        </p>
+
+    </nav>
+
+
+    <main class="px-6 py-4">
+        <!-- cards -->
+        <section>
+
+            <div class="flex flex-col gap-4 md:flex-row justify-between md:items-center mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold">Mes joueurs</h1>
+                    <p class="text-muted text-sm">Gérez vos profils et choisissez votre joueur.</p>
+                </div>
+                <button id="add-player-btn"
+                    class="bg-primary text-background px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-all cursor-pointer">Ajouter
+                    un joueur</button>
+            </div>
+
+            <section id="players-list" class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+
+            </section>
+
+            <!-- Aucun joueur heddin -->
+            <div id="empty-players"
+                class="hidden flex-col items-center justify-center bg-surface border border-border rounded-xl p-10 mt-4 text-center">
+                <img src="./assets/images/blue-add-user-icon-with-glossy-finish-transparent-background-person-isolated-transparent-background.png"
+                    alt="" class="w-20 h-20 object-contain mb-5 border border-border rounded-full">
+                <h2 class="text-xl font-semibold mb-2">Aucun joueur pour le moment</h2>
+                <p class="text-muted text-sm ">Créez votre premier profil pour commencer à jouer.</p>
+            </div>
+
+        </section>
+
+        <!-- Ajouter un joueur -->
+        <div id="player-modal" class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-4">
+            <div class="bg-surface rounded-xl p-6 w-full max-w-md">
+                <div class="flex justify-between items-center mb-5">
+                    <h2 class="text-xl font-semibold">Ajouter un joueur</h2>
+                    <button id="close-player-modal" type="button"
+                        class="text-muted hover:text-text-main text-xl transition-colors w-11 border border-border rounded-lg cursor-pointer">x</button>
+                </div>
+                <form id="player-form">
+                    <label class="block text-sm font-medium mb-2" for="pseudo">Pseudo</label>
+                    <input
+                        class="w-full bg-background border border-border rounded-lg px-4 py-3 outline-none focus:border-primary"
+                        type="text" placeholder="Entrez votre pseudo" id="pseudo">
+                    <small id="pseudo-hint" class="block text-muted text-xs mt-2	">3 à 15 caractères, lettres et
+                        chiffres
+                        uniquement.</small>
+                    <p class="mt-5 mb-3 text-sm font-medium">Choisissez un avatar</p>
+
+                    <div class="grid grid-cols-3 sm:grid-cols-6 gap-3">
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="arab-man_945277.png"><img src="./assets/images/arab-man_945277.png"
+                                alt=""></button>
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="athlete_945279.png"><img src="./assets/images/athlete_945279.png"
+                                alt=""></button>
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="dancer_945275.png"><img src="./assets/images/dancer_945275.png"
+                                alt=""></button>
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="devil_945280.png"><img src="./assets/images/devil_945280.png" alt=""></button>
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="stewardess_945227.png"><img src="./assets/images/stewardess_945227.png"
+                                alt=""></button>
+                        <button class="avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="woman_945276.png"><img src="./assets/images/woman_945276.png" alt=""></button>
+                    </div>
+                    <div class="flex justify-end gap-3 mt-6">
+                        <button id="cancel-player-btn"
+                            class="border border-border rounded-lg px-4 py-2 text-sm hover:bg-border transition-colors cursor-pointer"
+                            type="button">Annuler</button>
+                        <button
+                            class="bg-primary text-background rounded-lg px-4 py-2 font-medium hover:opacity-90 transition-all cursor-pointer"
+                            type="submit">Créer
+                            le
+                            profil</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+        <!-- Modifier un joueur -->
+
+        <div id="edit-player-modal" class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-4">
+            <div class="bg-surface rounded-xl p-6 w-full max-w-md">
+                <div class="flex justify-between items-center mb-5">
+                    <h2 class="text-xl font-semibold">Modifier un joueur</h2>
+                    <button id="close-edit-player-modal" type="button"
+                        class="text-muted hover:text-text-main text-xl transition-colors w-11 border border-border rounded-lg">x</button>
+                </div>
+                <form id="edit-player-form">
+                    <label class="block text-sm font-medium mb-2" for="edit-pseudo">Pseudo</label>
+                    <input
+                        class="w-full bg-background border border-border rounded-lg px-4 py-3 outline-none focus:border-primary"
+                        type="text" placeholder="Entrez votre pseudo" id="edit-pseudo">
+                    <small id="edit-pseudo-hint" class="block text-muted text-xs mt-2	">3 à 15 caractères, lettres et
+                        chiffres uniquement.</small>
+                    <p class="mt-5 mb-3 text-sm font-medium">Choisissez un avatar</p>
+
+                    <div class="grid grid-cols-3 sm:grid-cols-6 gap-3">
+                        <button class="edit-avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="arab-man_945277.png"><img src="./assets/images/arab-man_945277.png"
+                                alt=""></button>
+                        <button class="edit-avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="athlete_945279.png"><img src="./assets/images/athlete_945279.png"
+                                alt=""></button>
+                        <button class="edit-avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="dancer_945275.png"><img src="./assets/images/dancer_945275.png"
+                                alt=""></button>
+                        <button class="edit-avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="devil_945280.png"><img src="./assets/images/devil_945280.png" alt=""></button>
+                        <button class="edit-avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="stewardess_945227.png"><img src="./assets/images/stewardess_945227.png"
+                                alt=""></button>
+                        <button class="edit-avatar-option border border-border rounded-full p-0.5" type="button"
+                            data-avatar="woman_945276.png"><img src="./assets/images/woman_945276.png" alt=""></button>
+                    </div>
+                    <div class="flex justify-end gap-3 mt-6">
+                        <button id="cancel-edit-player-btn"
+                            class="border border-border rounded-lg px-4 py-2 text-sm hover:bg-border transition-colors"
+                            type="button">Annuler</button>
+                        <button class="bg-primary text-background rounded-lg px-4 py-2 font-medium"
+                            type="submit">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+    <footer class="bg-surface p-5">
+        <p class="text-muted text-sm">© 2026 Empereur, Citoyen, Esclave. Tous droits réservés.</p>
+    </footer>
+    <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>

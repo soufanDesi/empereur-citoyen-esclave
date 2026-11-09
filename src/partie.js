@@ -1,6 +1,6 @@
-import { getPlayers } from "./storage.js";
+import { getPlayers, saveCurrentGame, getCurrentGame, getHistory, saveHistory } from "./storage.js";
 import { updateActivePlayerName } from "./ui.js";
-import { createHand, getPlayerCamp, getComputerCamp, chooseComputerCard, duel, removePlayedCard, updateScore, nextRound } from "./game.js";
+import { createHand, getPlayerCamp, getComputerCamp, chooseComputerCard, duel, removePlayedCard, updateScore, nextRound, switchFirstCamp } from "./game.js";
 
 const players = getPlayers();
 
@@ -15,6 +15,16 @@ let campPC;
 
 let mainJoueur;
 let mainPC;
+
+let lastPlayerCard = null;
+let lastComputerCard = null;
+let lastResult = null;
+
+let premierCamp = "Empereur";
+let cartePCEnAttente = null;
+
+let duelEncour = false;
+
 
 const nextRoundButton = document.querySelector("#next-round-btn");
 
@@ -65,6 +75,9 @@ startButton.addEventListener("click", function () {
     updateGameInfo()
     renderPlayerCards();
     renderComputerCards();
+    updateFirstCamp();
+    prepareComputerCard();
+    saveGameState();
 })
 
 
@@ -121,21 +134,67 @@ function renderComputerCards() {
     });
 }
 
+function updateFirstCamp() {
+    document.querySelector("#first-camp").textContent = premierCamp;
+}
+
+function prepareComputerCard() {
+    cartePCEnAttente = null;
+
+    if (premierCamp === campPC) {
+        cartePCEnAttente = chooseComputerCard(mainPC);
+        removePlayedCard(mainPC, cartePCEnAttente);
+        renderComputerCards();
+
+        document.querySelector("#duel-computer").innerHTML =
+            `<img src="./assets/images/CardBack.png" alt="Carte cachée" class="w-full h-full object-contain">`;
+    }
+}
+
 let mancheTerminee = false;
 
 function playDuel(carteJoueur) {
 
-    if (mancheTerminee) {
+    if (mancheTerminee || duelEncour) {
         return;
     }
-    const cartePC = chooseComputerCard(mainPC);
+    duelEncour = true;
+
+    const pcDejaJoue = cartePCEnAttente !== null;
+    const cartePC = cartePCEnAttente ?? chooseComputerCard(mainPC);
+    cartePCEnAttente = null;
 
     const resultat = duel(carteJoueur, cartePC);
 
-    removePlayedCard(mainJoueur, carteJoueur);
-    removePlayedCard(mainPC, cartePC);
+    lastPlayerCard = carteJoueur;
+    lastComputerCard = cartePC;
+    lastResult = resultat;
 
-    renderDuelCards(carteJoueur, cartePC);
+    removePlayedCard(mainJoueur, carteJoueur);
+
+    if (!pcDejaJoue) {
+        removePlayedCard(mainPC, cartePC);
+    }
+    showHiddenDuelCards();
+    setTimeout(function () {
+        renderDuelCards(carteJoueur, cartePC);
+
+        if (resultat !== "egalite") {
+            mancheTerminee = true;
+            nextRoundButton.classList.remove("hidden");
+
+            const scores = updateScore(resultat, campJoueur, campPC, scoreJoueur, scorePC);
+
+            scoreJoueur = scores.scoreJoueur;
+            scorePC = scores.scorePC;
+
+            console.log("Score joueur :", scoreJoueur);
+            console.log("Score PC :", scorePC);
+            updateScoreDisplay();
+        }
+
+    }, 600)
+    // renderDuelCards(carteJoueur, cartePC);
 
     console.log("Joueur :", carteJoueur)
     console.log("Ordinateur :", cartePC);
@@ -144,20 +203,39 @@ function playDuel(carteJoueur) {
     renderPlayerCards();
     renderComputerCards();
 
-    if (resultat !== "egalite") {
-        mancheTerminee = true;
-        nextRoundButton.classList.remove("hidden");
+    // if (resultat !== "egalite") {
+    //     mancheTerminee = true;
+    //     nextRoundButton.classList.remove("hidden");
 
-        const scores = updateScore(resultat, campJoueur, campPC, scoreJoueur, scorePC);
+    //     const scores = updateScore(resultat, campJoueur, campPC, scoreJoueur, scorePC);
 
-        scoreJoueur = scores.scoreJoueur;
-        scorePC = scores.scorePC;
+    //     scoreJoueur = scores.scoreJoueur;
+    //     scorePC = scores.scorePC;
 
-        console.log("Score joueur :", scoreJoueur);
-        console.log("Score PC :", scorePC);
-        updateScoreDisplay();
+    //     console.log("Score joueur :", scoreJoueur);
+    //     console.log("Score PC :", scorePC);
+    //     updateScoreDisplay();
+    // }
+
+    if (resultat === "egalite") {
+        setTimeout(function () {
+            resetDuelZone();
+            premierCamp = switchFirstCamp(premierCamp);
+            updateFirstCamp();
+
+            prepareComputerCard();
+            duelEncour = false;
+            saveGameState();
+        }, 2400)
+
+    } else {
+        setTimeout(function () {
+            duelEncour = false;
+            saveGameState();
+
+        }, 600)
+
     }
-
 }
 
 function renderDuelCards(carteJoueur, cartePC) {
@@ -165,17 +243,33 @@ function renderDuelCards(carteJoueur, cartePC) {
     const duelComputer = document.querySelector("#duel-computer");
 
     duelPlayer.innerHTML = `
-        <img src="./assets/images/${carteJoueur}.png" alt="${carteJoueur}" class="w-full h-full object-contain">
+        <img src="./assets/images/${carteJoueur}.png" alt="${carteJoueur}" class="w-full h-full object-contain animate-card-flip">
     `;
 
     duelComputer.innerHTML = `
-        <img src="./assets/images/${cartePC}.png" alt="${cartePC}" class="w-full h-full object-contain">
+        <img src="./assets/images/${cartePC}.png" alt="${cartePC}" class="w-full h-full object-contain animate-card-flip">
     `;
 }
 
 
+function resetDuelZone() {
+    document.querySelector("#duel-player").textContent = "?";
+    document.querySelector("#duel-computer").textContent = "?";
+}
+
+function showHiddenDuelCards() {
+    const cardBack = ' <img src="./assets/images/CardBack.png" alt="Carte cachée" class="w-full h-full object-contain">'
+
+    document.querySelector("#duel-player").innerHTML = cardBack;
+    document.querySelector("#duel-computer").innerHTML = cardBack;
+}
+
 nextRoundButton.addEventListener("click", function () {
     const nouvelleManche = nextRound(manche);
+
+    lastPlayerCard = null;
+    lastComputerCard = null;
+    lastResult = null;
 
     if (nouvelleManche === null) {
         console.log("Fin de partie");
@@ -190,10 +284,18 @@ nextRoundButton.addEventListener("click", function () {
     renderPlayerCards();
     renderComputerCards();
 
-    document.querySelector("#duel-player").textContent = "?";
-    document.querySelector("#duel-computer").textContent = "?";
 
     nextRoundButton.classList.add("hidden");
+
+
+    premierCamp = switchFirstCamp(premierCamp);
+    updateFirstCamp();
+
+    resetDuelZone();
+
+    prepareComputerCard();
+
+    saveGameState();
 });
 
 
@@ -216,5 +318,87 @@ function endGame() {
 
     document.querySelector("#final-player-score").textContent = scoreJoueur;
     document.querySelector("#final-computer-score").textContent = scorePC;
+
+    const history = getHistory();
+
+    const activePlayerId = localStorage.getItem("ece_active_player");
+    const activePlayer = players.find(function (player) {
+        return player.id === activePlayerId;
+    })
+
+    const partie = {
+        playerName: activePlayer.nickname,
+        scoreJoueur: scoreJoueur,
+        scorePC: scorePC,
+        resultat: finalResult.textContent,
+        date: new Date().toISOString()
+    }
+    history.push(partie);
+    saveHistory(history);
 }
 
+const replayButton = document.querySelector("#replay-btn");
+
+replayButton.addEventListener("click", function () {
+    localStorage.removeItem("ece_current_game");
+    window.location.reload();
+})
+
+
+function saveGameState() {
+    const game = { playerId: localStorage.getItem("ece_active_player"), manche: manche, scoreJoueur: scoreJoueur, scorePC: scorePC, campJoueur: campJoueur, campPC: campPC, mainJoueur: mainJoueur, mainPC: mainPC, mancheTerminee: mancheTerminee, premierCamp: premierCamp, cartePCEnAttente: cartePCEnAttente, lastPlayerCard: lastPlayerCard, lastComputerCard: lastComputerCard, lastResult: lastResult };
+
+    saveCurrentGame(game);
+}
+
+function restoreGameState() {
+    const game = getCurrentGame();
+    if (!game) {
+        return;
+    }
+
+    const activePlayerId = localStorage.getItem("ece_active_player");
+
+    if (game.playerId !== activePlayerId) {
+        return;
+    }
+
+    manche = game.manche;
+    scoreJoueur = game.scoreJoueur;
+    scorePC = game.scorePC;
+    campJoueur = game.campJoueur;
+    campPC = game.campPC;
+
+    mainJoueur = game.mainJoueur;
+    mainPC = game.mainPC;
+
+    mancheTerminee = game.mancheTerminee;
+    premierCamp = game.premierCamp;
+    cartePCEnAttente = game.cartePCEnAttente ?? null;
+
+    lastPlayerCard = game.lastPlayerCard;
+    lastComputerCard = game.lastComputerCard;
+    lastResult = game.lastResult;
+
+    startScreen.classList.add("hidden");
+    gameScreen.classList.remove("hidden");
+
+    updateGameInfo();
+    updateScoreDisplay();
+    renderPlayerCards();
+    renderComputerCards();
+    updateFirstCamp();
+
+    resetDuelZone();
+
+    if (mancheTerminee && lastPlayerCard && lastComputerCard) {
+        renderDuelCards(lastPlayerCard, lastComputerCard);
+        nextRoundButton.classList.remove("hidden");
+
+    } else if (cartePCEnAttente !== null) {
+        document.querySelector("#duel-computer").innerHTML = ` 
+        <img src="./assets/images/CardBack.png" alt="Carte cachée" class="w-full h-full object-contain">
+    `;
+    }
+}
+restoreGameState();
