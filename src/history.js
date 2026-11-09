@@ -1,8 +1,9 @@
 import { getPlayers, getHistory, saveHistory } from "./storage.js";
-import { updateActivePlayerName } from "./ui.js";
+import { updateActivePlayerName, initMobileMenu} from "./ui.js";
 
 const players = getPlayers();
 updateActivePlayerName(players);
+initMobileMenu();
 
 let history = getHistory();
 const historyList = document.querySelector("#history-list");

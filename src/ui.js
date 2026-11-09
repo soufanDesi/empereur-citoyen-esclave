@@ -21,3 +21,13 @@ export function updateActivePlayerName(players) {
     })
 
 }
+
+export function initMobileMenu() {
+    const menuToggle = document.querySelector("#menu-toggle");
+    const mobileMenu = document.querySelector("#mobile-menu");
+
+    menuToggle.addEventListener("click", function () {
+        mobileMenu.classList.toggle("hidden");
+        mobileMenu.classList.toggle("flex");
+    });
+}

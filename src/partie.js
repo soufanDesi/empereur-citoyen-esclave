@@ -1,7 +1,7 @@
 import { getPlayers, saveCurrentGame, getCurrentGame, getHistory, saveHistory } from "./storage.js";
-import { updateActivePlayerName } from "./ui.js";
+import { updateActivePlayerName, initMobileMenu } from "./ui.js";
 import { createHand, getPlayerCamp, getComputerCamp, chooseComputerCard, duel, removePlayedCard, updateScore, nextRound, switchFirstCamp } from "./game.js";
-
+initMobileMenu();
 const players = getPlayers();
 
 updateActivePlayerName(players);

@@ -1,17 +1,8 @@
 import { addPlayer, validateEditPlayer } from "./players.js";
 import { getPlayers, savePlayers, getHistory, saveHistory } from "./storage.js"
-import { updateActivePlayerName } from "./ui.js";
+import { updateActivePlayerName, initMobileMenu} from "./ui.js";
 
-// menu mobile affich
-const menuT = document.querySelector("#menu-toggle");
-const mobileM = document.querySelector("#mobile-menu");
-
-menuT.addEventListener("click", function () {
-
-    mobileM.classList.toggle("hidden");
-    mobileM.classList.toggle("flex");
-
-});
+initMobileMenu();
 
 // ajouter un joueur
 const addPlayerButton = document.querySelector("#add-player-btn");

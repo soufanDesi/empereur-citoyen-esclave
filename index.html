@@ -54,15 +54,235 @@
 
     <main class="flex-1 px-6 py-4">
 
+        <section class="bg-surface border border-border rounded-xl px-6 py-12 text-center">
+
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">
+                Empereur, Citoyen, Esclave
+            </h1>
+
+            <p class="text-muted text-sm md:text-base max-w-2xl mx-auto mb-6">
+                Affrontez l'ordinateur dans un jeu de stratégie de 12 manches. Choisissez vos cartes, remportez des
+                duels et marquez le maximum de points !
+            </p>
+
+            <a href="./partie.html"
+                class="inline-block bg-primary text-white font-medium px-6 py-3 rounded-lg hover:opacity-90 transition-opacity">
+                Jouer maintenant
+            </a>
+
+        </section>
+
+
+        <!-- Règles du jeu -->
+        <section class="mt-8">
+
+            <h2 class="text-2xl font-bold mb-2">
+                Règles du jeu
+            </h2>
+
+            <p class="text-muted text-sm mb-5">
+                Chaque carte possède une force et une faiblesse.
+                Découvrez les règles pour remporter vos duels.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                <!-- empereur -->
+                <div class="bg-surface border border-border rounded-xl p-6 text-center">
+                    <img src="./assets/images/empereurIcon.png" alt="Empereur"
+                        class="w-20 h-20 object-contain mx-auto mb-3">
+
+                    <h3 class="text-lg font-semibold mb-2">
+                        Empereur
+                    </h3>
+
+                    <p class="text-muted text-sm">
+                        L'Empereur bat le Citoyen,
+                        mais perd contre l'Esclave.
+                    </p>
+                </div>
+
+                <!-- citoyen -->
+                <div class="bg-surface border border-border rounded-xl p-6 text-center">
+                    <img src="./assets/images/citoyenIcon.png" alt="Citoyen"
+                        class="w-20 h-20 object-contain mx-auto mb-3">
+
+                    <h3 class="text-lg font-semibold mb-2">
+                        Citoyen
+                    </h3>
+
+                    <p class="text-muted text-sm">
+                        Le Citoyen bat l'Esclave,
+                        mais perd contre l'Empereur.
+                    </p>
+                </div>
+
+                <!-- esclave -->
+                <div class="bg-surface border border-border rounded-xl p-6 text-center">
+                    <img src="./assets/images/esclaveIcon.png" alt="Esclave"
+                        class="w-20 h-20 object-contain mx-auto mb-3">
+
+                    <h3 class="text-lg font-semibold mb-2">
+                        Esclave
+                    </h3>
+
+                    <p class="text-muted text-sm">
+                        L'Esclave bat l'Empereur,
+                        mais perd contre le Citoyen.
+                    </p>
+                </div>
+
+            </div>
+
+            <p class="text-muted text-sm mt-4 text-center">
+                Si deux Citoyens s'affrontent, le duel se termine par une égalité.
+            </p>
+
+        </section>
+
+
+        <!-- systeme de points -->
+        <section class="mt-8">
+
+            <h2 class="text-2xl font-bold mb-2">
+                Système de points
+            </h2>
+
+            <p class="text-muted text-sm mb-5">
+                Les points dépendent du camp avec lequel vous gagnez la manche.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <!-- Camp Empereur -->
+                <div class="bg-surface border border-border rounded-xl p-6 text-center">
+
+                    <img src="./assets/images/empereurIcon.png" alt="Empereur"
+                        class="w-16 h-16 object-contain mx-auto mb-3">
+
+                    <h3 class="text-lg font-semibold mb-2">
+                        Camp de l'Empereur
+                    </h3>
+
+                    <p class="text-primary text-3xl font-bold mb-2">
+                        +1 point
+                    </p>
+
+                    <p class="text-muted text-sm">
+                        Chaque manche gagnée dans ce camp rapporte 1 point.
+                    </p>
+
+                </div>
+
+                <!-- camp esclave -->
+                <div class="bg-surface border border-border rounded-xl p-6 text-center">
+
+                    <img src="./assets/images/esclaveIcon.png" alt="Esclave"
+                        class="w-16 h-16 object-contain mx-auto mb-3">
+
+                    <h3 class="text-lg font-semibold mb-2">
+                        Camp de l'Esclave
+                    </h3>
+
+                    <p class="text-primary text-3xl font-bold mb-2">
+                        +5 points
+                    </p>
+
+                    <p class="text-muted text-sm">
+                        Chaque manche gagnée dans ce camp rapporte 5 points.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <p class="text-muted text-sm text-center mt-4">
+                Gagner dans le camp de l'Esclave est plus difficile,
+                c'est pourquoi la victoire rapporte davantage de points.
+            </p>
+
+        </section>
+
+
+        <section class="mt-8 mb-8">
+
+            <h2 class="text-2xl font-bold mb-2">
+                Comment jouer ?
+            </h2>
+
+            <p class="text-muted text-sm mb-5">
+                Suivez ces étapes pour commencer votre partie.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-surface border border-border rounded-xl p-5">
+                    <span class="text-primary text-2xl font-bold">01</span>
+
+                    <h3 class="text-lg font-semibold mt-2 mb-2">
+                        Choisissez votre joueur
+                    </h3>
+
+                    <p class="text-muted text-sm">
+                        Créez un profil ou sélectionnez un joueur existant
+                        avant de commencer une partie.
+                    </p>
+                </div>
+
+                <div class="bg-surface border border-border rounded-xl p-5">
+                    <span class="text-primary text-2xl font-bold">02</span>
+
+                    <h3 class="text-lg font-semibold mt-2 mb-2">
+                        Jouez vos cartes
+                    </h3>
+
+                    <p class="text-muted text-sm">
+                        Choisissez une carte parmi vos 5 cartes.
+                        L'ordinateur choisit la sienne au hasard.
+                        En cas d'égalité, le duel continue avec les cartes restantes.
+                    </p>
+                </div>
+
+                <div class="bg-surface border border-border rounded-xl p-5">
+                    <span class="text-primary text-2xl font-bold">03</span>
+
+                    <h3 class="text-lg font-semibold mt-2 mb-2">
+                        Changez de camp
+                    </h3>
+
+                    <p class="text-muted text-sm">
+                        La partie comporte 12 manches.
+                        Vous commencez dans le camp de l'Empereur,
+                        puis les camps changent après les manches 3, 6 et 9.
+                    </p>
+                </div>
+
+                <div class="bg-surface border border-border rounded-xl p-5">
+                    <span class="text-primary text-2xl font-bold">04</span>
+
+                    <h3 class="text-lg font-semibold mt-2 mb-2">
+                        Remportez la partie
+                    </h3>
+
+                    <p class="text-muted text-sm">
+                        Accumulez le maximum de points pendant les 12 manches.
+                        Le joueur avec le score le plus élevé remporte la partie !
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
     </main>
 
-    <!-- Footer -->
+    <!-- footer -->
     <footer class="bg-surface p-5">
         <p class="text-muted text-sm">
             © 2026 Empereur, Citoyen, Esclave. Tous droits réservés.
         </p>
     </footer>
-
+    <script type="module" src="./src/accueil.js"></script>
 </body>
 
 </html>
